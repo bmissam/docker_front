@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import GoalInput from './components/goals/GoalInput';
 import CourseGoals from './components/goals/CourseGoals';
 import ErrorAlert from './components/UI/ErrorAlert';
+import { BACK_URL } from './config';
 
 function App() {
   const [loadedGoals, setLoadedGoals] = useState([]);
