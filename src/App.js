@@ -14,7 +14,7 @@ function App() {
       setIsLoading(true);
 
       try {
-        const response = await fetch('http://localhost/goals');
+        const response = await fetch(BACK_URL + '/goals');
 
         const resData = await response.json();
 
@@ -26,7 +26,7 @@ function App() {
       } catch (err) {
         setError(
           err.message ||
-            'Fetching goals failed - the server responsed with an error.'
+          'Fetching goals failed - the server responsed with an error.'
         );
       }
       setIsLoading(false);
@@ -39,7 +39,7 @@ function App() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost/goals', {
+      const response = await fetch(BACK_URL + '/goals', {
         method: 'POST',
         body: JSON.stringify({
           text: goalText,
@@ -68,7 +68,7 @@ function App() {
     } catch (err) {
       setError(
         err.message ||
-          'Adding a goal failed - the server responsed with an error.'
+        'Adding a goal failed - the server responsed with an error.'
       );
     }
     setIsLoading(false);
@@ -78,38 +78,38 @@ function App() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost/goals/' + goalId, {
+      const response = await fetch(BACK_URL + '/goals/' + goalId, {
         method: 'DELETE',
       });
 
-      const resData = await response.json();
+    const resData = await response.json();
 
-      if (!response.ok) {
-        throw new Error(resData.message || 'Deleting the goal failed.');
-      }
-
-      setLoadedGoals((prevGoals) => {
-        const updatedGoals = prevGoals.filter((goal) => goal.id !== goalId);
-        return updatedGoals;
-      });
-    } catch (err) {
-      setError(
-        err.message ||
-          'Deleting the goal failed - the server responsed with an error.'
-      );
+    if (!response.ok) {
+      throw new Error(resData.message || 'Deleting the goal failed.');
     }
-    setIsLoading(false);
-  }
 
-  return (
-    <div>
-      {error && <ErrorAlert errorText={error} />}
-      <GoalInput onAddGoal={addGoalHandler} />
-      {!isLoading && (
-        <CourseGoals goals={loadedGoals} onDeleteGoal={deleteGoalHandler} />
-      )}
-    </div>
-  );
+    setLoadedGoals((prevGoals) => {
+      const updatedGoals = prevGoals.filter((goal) => goal.id !== goalId);
+      return updatedGoals;
+    });
+  } catch (err) {
+    setError(
+      err.message ||
+      'Deleting the goal failed - the server responsed with an error.'
+    );
+  }
+  setIsLoading(false);
+}
+
+return (
+  <div>
+    {error && <ErrorAlert errorText={error} />}
+    <GoalInput onAddGoal={addGoalHandler} />
+    {!isLoading && (
+      <CourseGoals goals={loadedGoals} onDeleteGoal={deleteGoalHandler} />
+    )}
+  </div>
+);
 }
 
 export default App;

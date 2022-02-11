@@ -1,0 +1,1 @@
+export const BACK_URL = 'http://' + process.env.BACK_URL
