@@ -13,7 +13,6 @@ function App() {
   useEffect(function () {
     async function fetchData() {
       setIsLoading(true);
-
       try {
         const response = await fetch(BACK_URL + '/goals');
 
